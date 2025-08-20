@@ -94,11 +94,6 @@ export interface SummarizationRequestedContent {
   msg: string;
 }
 
-export interface CompactionMarkerContent {
-  type: 'compactionMarker';
-  msg: string;
-}
-
 export type MessageContent =
   | TextContent
   | ImageContent
@@ -106,8 +101,7 @@ export type MessageContent =
   | ToolResponseMessageContent
   | ToolConfirmationRequestMessageContent
   | ContextLengthExceededContent
-  | SummarizationRequestedContent
-  | CompactionMarkerContent;
+  | SummarizationRequestedContent;
 
 export interface Message {
   id?: string;

@@ -72,7 +72,7 @@ export const ContextManagerProvider: React.FC<{ children: React.ReactNode }> = (
             created: Math.floor(Date.now() / 1000),
             content: [
               {
-                type: 'compactionMarker',
+                type: 'summarizationRequested',
                 msg: 'Conversation compacted and summarized',
               },
             ],
@@ -111,7 +111,7 @@ export const ContextManagerProvider: React.FC<{ children: React.ReactNode }> = (
           created: Math.floor(Date.now() / 1000),
           content: [
             {
-              type: 'compactionMarker',
+              type: 'summarizationRequested',
               msg: 'Compaction failed. Please try again or start a new session.',
             },
           ],
@@ -163,7 +163,7 @@ export const ContextManagerProvider: React.FC<{ children: React.ReactNode }> = (
   );
 
   const hasCompactionMarker = useCallback((message: Message): boolean => {
-    return message.content.some((content) => content.type === 'compactionMarker');
+    return message.content.some((content) => content.type === 'summarizationRequested');
   }, []);
 
   const value = {
