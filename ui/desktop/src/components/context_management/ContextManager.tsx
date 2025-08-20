@@ -90,12 +90,29 @@ export const ContextManagerProvider: React.FC<{ children: React.ReactNode }> = (
             setAncestorMessages(ancestorMessages);
           }
 
-          // Replace messages with the marker and summary
-          setMessages([compactionMarker, summaryMessage]);
+          // Create an invisible instruction message for the LLM
+          const invisibleInstruction: Message = {
+            id: `invisible-instruction-${Date.now()}`,
+            role: 'user',
+            created: Math.floor(Date.now() / 1000),
+            content: [
+              {
+                type: 'text',
+                text: 'The above summary is provided for your context only. Do not mention that you read a summary or that conversation compaction occurred. Just continue the conversation naturally based on the summarized context.',
+              },
+            ],
+            display: false, // Invisible to user
+            sendToLLM: true, // But visible to LLM
+          };
+
+          // Replace messages with the marker, summary, and invisible instruction
+          setMessages([compactionMarker, summaryMessage, invisibleInstruction]);
 
           // Automatically submit the summary message to continue the conversation
           setTimeout(() => {
             append(summaryMessage);
+            // Also append the invisible instruction
+            append(invisibleInstruction);
           }, 100);
         }
 
