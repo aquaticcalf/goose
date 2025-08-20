@@ -58,7 +58,7 @@ use super::platform_tools;
 use super::tool_execution::{ToolCallResult, CHAT_MODE_TOOL_SKIPPED_RESPONSE, DECLINED_RESPONSE};
 use crate::agents::subagent_task_config::TaskConfig;
 use crate::agents::todo_tools::{
-    // todo_read_tool, todo_write_tool, // TODO: Re-enable after next release
+    todo_read_tool, todo_write_tool,
     TODO_READ_TOOL_NAME,
     TODO_WRITE_TOOL_NAME,
 };
@@ -800,8 +800,7 @@ impl Agent {
             ]);
 
             // Add task planner tools
-            // TODO: Re-enable after next release
-            // prefixed_tools.extend([todo_read_tool(), todo_write_tool()]);
+            prefixed_tools.extend([todo_read_tool(), todo_write_tool()]);
 
             // Dynamic task tool
             prefixed_tools.push(create_dynamic_task_tool());
@@ -1558,7 +1557,6 @@ mod tests {
     }
 
     #[tokio::test]
-    #[ignore] // TODO: Re-enable after next release when TODO tools are re-enabled
     async fn test_todo_tools_integration() -> Result<()> {
         let agent = Agent::new();
 
