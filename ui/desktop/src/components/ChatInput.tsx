@@ -407,19 +407,22 @@ export default function ChatInput({
   useEffect(() => {
     clearAlerts();
 
-    addAlert({
-      type: AlertType.Info,
-      message: 'Context window',
-      progress: {
-        current: numTokens || 0,
-        total: tokenLimit,
-      },
-      showCompactButton: true,
-      onCompact: () => {
-        handleManualCompaction(messages, setMessages, append, clearAlerts, setAncestorMessages);
-      },
-      compactIcon: <ScrollText size={12} />,
-    });
+    // Only show context window alert if there are tokens being used
+    if (numTokens && numTokens > 0) {
+      addAlert({
+        type: AlertType.Info,
+        message: 'Context window',
+        progress: {
+          current: numTokens,
+          total: tokenLimit,
+        },
+        showCompactButton: true,
+        onCompact: () => {
+          handleManualCompaction(messages, setMessages, append, clearAlerts, setAncestorMessages);
+        },
+        compactIcon: <ScrollText size={12} />,
+      });
+    }
 
     // Add tool count alert if we have the data
     if (toolCount !== null && toolCount > TOOLS_MAX_SUGGESTED) {
